@@ -4,8 +4,25 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Image from "next/image";
 import { Terminal, Box, ShieldCheck, Zap, X } from "lucide-react";
-import { TOOLS } from "@/data/tools";
 import { PROJECTS, type Project } from "@/data/projects";
+
+const TOOL_LIST = [
+  { name: "TypeScript", color: "#3178C6" },
+  { name: "Python", color: "#3776AB" },
+  { name: "HTML5", color: "#E34F26" },
+  { name: "CSS3", color: "#1572B6" },
+  { name: "Tailwind", color: "#06B6D4" },
+  { name: "Supabase", color: "#3ECF8E" },
+  { name: "Firebase", color: "#FFCA28" },
+  { name: "OpenAI", color: "#FFFFFF" },
+  { name: "Gemini", color: "#4285F4" },
+  { name: "Claude", color: "#D97757" },
+  { name: "VS Code", color: "#007ACC" },
+  { name: "GCloud", color: "#4285F4" },
+  { name: "Vercel", color: "#FFFFFF" },
+  { name: "Cloudflare", color: "#F38020" },
+  { name: "GitHub", color: "#FFFFFF" },
+];
 
 /* ─── HERO ─── */
 function MobileHero() {
@@ -151,23 +168,28 @@ function MobileTools() {
         <h2 className="text-2xl font-black text-white uppercase tracking-tighter mt-2">Ferramentas</h2>
       </div>
 
-      <div className="grid grid-cols-5 gap-3">
-        {TOOLS.map((tool) => {
-          const Icon = tool.icon;
-          return (
-            <div key={tool.name} className="flex flex-col items-center gap-1.5">
-              <div
-                className="flex items-center justify-center w-11 h-11 rounded-lg bg-white/[0.04] border border-white/[0.08]"
-                style={{ boxShadow: `0 0 8px ${tool.color}10` }}
+      <div className="grid grid-cols-5 gap-x-2 gap-y-4">
+        {TOOL_LIST.map((tool) => (
+          <div key={tool.name} className="flex flex-col items-center gap-1.5">
+            <div
+              className="flex items-center justify-center w-12 h-12 rounded-xl border"
+              style={{
+                backgroundColor: `${tool.color}12`,
+                borderColor: `${tool.color}30`,
+              }}
+            >
+              <span
+                className="font-black text-sm"
+                style={{ color: tool.color }}
               >
-                <Icon size={20} color={tool.color} />
-              </div>
-              <span className="font-mono text-[7px] text-neutral-500 uppercase tracking-wide text-center leading-tight">
-                {tool.name}
+                {tool.name.slice(0, 2).toUpperCase()}
               </span>
             </div>
-          );
-        })}
+            <span className="font-mono text-[7px] text-neutral-400 uppercase tracking-wide text-center leading-tight">
+              {tool.name}
+            </span>
+          </div>
+        ))}
       </div>
 
       <div className="mt-6 text-center">
@@ -257,34 +279,51 @@ function MobileProjects() {
         </h2>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
         {PROJECTS.map((project) => (
-          <button
+          <div
             key={project.id}
             onClick={() => setOpenProject(project)}
-            className="w-full text-left rounded-2xl overflow-hidden bg-neutral-900/80 border border-white/[0.06] active:scale-[0.98] transition-transform duration-150"
+            role="button"
+            tabIndex={0}
+            className="rounded-2xl overflow-hidden border border-white/[0.08]"
+            style={{ backgroundColor: "#111" }}
           >
             {/* Image */}
-            <div className="relative w-full aspect-[16/9]">
-              <Image src={project.image} alt={project.title} fill sizes="100vw" className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-              <div className="absolute bottom-3 left-4">
+            <div style={{ position: "relative", width: "100%", paddingBottom: "56.25%" }}>
+              <Image src={project.image} alt={project.title} fill sizes="100vw" style={{ objectFit: "cover" }} />
+            </div>
+
+            {/* Info — sempre visível */}
+            <div style={{ padding: "16px", backgroundColor: "#111" }}>
+              <p style={{ fontSize: "9px", fontFamily: "monospace", color: "#666", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "4px" }}>
+                {project.category}
+              </p>
+              <h3 style={{ fontSize: "18px", fontWeight: 900, color: "#fff", textTransform: "uppercase", letterSpacing: "-0.02em", marginBottom: "6px" }}>
+                {project.title}
+              </h3>
+              <p style={{ fontSize: "12px", color: "#888", lineHeight: 1.5 }}>
+                {project.description}
+              </p>
+              <div style={{ marginTop: "8px" }}>
                 <span
-                  className="text-[8px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full border"
-                  style={{ color: project.color, borderColor: `${project.color}30`, backgroundColor: `${project.color}10` }}
+                  style={{
+                    fontSize: "8px",
+                    fontFamily: "monospace",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    padding: "2px 8px",
+                    borderRadius: "9999px",
+                    border: `1px solid ${project.color}30`,
+                    color: project.color,
+                    backgroundColor: `${project.color}10`,
+                  }}
                 >
                   {project.status}
                 </span>
               </div>
             </div>
-
-            {/* Info */}
-            <div className="px-4 py-4 bg-neutral-900">
-              <span className="text-[9px] font-mono uppercase tracking-widest text-neutral-600 block">{project.category}</span>
-              <h3 className="text-lg font-black text-white uppercase tracking-tight mt-0.5">{project.title}</h3>
-              <p className="text-xs text-neutral-500 leading-relaxed mt-1.5 line-clamp-2">{project.description}</p>
-            </div>
-          </button>
+          </div>
         ))}
       </div>
 
