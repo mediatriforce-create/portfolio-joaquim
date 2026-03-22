@@ -155,7 +155,7 @@ export function Hero() {
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.6, ease: "easeOut" }}
-          className="mb-10 inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/10 bg-white/[0.03]"
+          className="mb-6 sm:mb-10 inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/10 bg-white/[0.03]"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-[#00ff66] animate-pulse" />
           <span className="text-[11px] font-mono tracking-[0.2em] text-neutral-500 uppercase">
@@ -209,7 +209,7 @@ export function Hero() {
 
         {/* Copy */}
         <div ref={copyAreaRef} className="flex flex-col items-center gap-8 max-w-lg">
-          <p className="text-base md:text-lg text-neutral-500 leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-neutral-500 leading-relaxed">
             Você perde horas em tarefas que uma máquina poderia fazer.{" "}
             <span className="text-neutral-300">
               Eu construo o sistema que devolve esse tempo.

@@ -241,7 +241,7 @@ function PhaseTitle({
     <motion.div style={{ opacity, y }}
       className="absolute top-[20%] left-0 right-0 flex flex-col items-center z-20 pointer-events-none px-6"
     >
-      <h3 className="text-2xl md:text-4xl lg:text-5xl font-black text-white uppercase tracking-tighter text-center leading-[1.1] mb-3 max-w-3xl">
+      <h3 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black text-white uppercase tracking-tighter text-center leading-[1.1] mb-3 max-w-3xl">
         {parts.map((part, i) =>
           i % 2 === 1 ? <span key={i} className="text-[#00ff66]">{part}</span> : <span key={i}>{part}</span>
         )}
@@ -342,7 +342,7 @@ function FirstProjectCard({
   return (
     <motion.div
       style={{ perspective: 1200, zIndex, x: exitX, y: exitY, rotate: exitRotate, scale: exitScale, pointerEvents: cardPointer }}
-      className="absolute inset-0 flex items-center justify-center p-6 md:p-12"
+      className="absolute inset-0 flex items-center justify-center p-3 sm:p-6 md:p-12"
     >
       <motion.div
         style={{
@@ -410,7 +410,7 @@ function StackingProjectCard({
   return (
     <motion.div
       style={{ opacity, y: enterY, zIndex, x: exitX, rotate: exitRotate, scale: exitScale, pointerEvents: cardPointer }}
-      className="absolute inset-0 flex items-center justify-center p-6 md:p-12"
+      className="absolute inset-0 flex items-center justify-center p-3 sm:p-6 md:p-12"
     >
       <motion.div
         style={{ y: exitYOffset, boxShadow: "0 -20px 60px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.8)" }}
@@ -869,7 +869,7 @@ function ProjectsTitle({ scrollYProgress }: { scrollYProgress: MotionValue<numbe
       <span className="text-[12px] font-mono tracking-[0.5em] text-[#00ff66] uppercase mb-4">
         Arquitetura Aplicada
       </span>
-      <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white uppercase tracking-tighter text-center leading-[0.9]">
+      <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-white uppercase tracking-tighter text-center leading-[0.9]">
         Meus<br />
         <span className="text-transparent" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.3)" }}>
           Projetos
@@ -1145,7 +1145,7 @@ function ContactPreview({ scrollYProgress }: { scrollYProgress: MotionValue<numb
           initial={{ opacity: 0, y: 40 }}
           animate={revealed ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl md:text-7xl lg:text-[6rem] font-black text-white tracking-tighter uppercase mb-2 leading-[0.85] text-center"
+          className="text-3xl sm:text-5xl md:text-7xl lg:text-[6rem] font-black text-white tracking-tighter uppercase mb-2 leading-[0.85] text-center"
         >
           Tem um projeto
         </motion.h3>
@@ -1153,7 +1153,7 @@ function ContactPreview({ scrollYProgress }: { scrollYProgress: MotionValue<numb
           initial={{ opacity: 0, y: 40 }}
           animate={revealed ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.45, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter uppercase mb-10 leading-[0.85] text-center"
+          className="text-3xl sm:text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter uppercase mb-6 sm:mb-10 leading-[0.85] text-center"
           style={{ color: "transparent", WebkitTextStroke: "1.5px rgba(255,255,255,0.2)" }}
         >
           em mente?
@@ -1172,7 +1172,7 @@ function ContactPreview({ scrollYProgress }: { scrollYProgress: MotionValue<numb
           initial={{ opacity: 0, y: 20 }}
           animate={revealed ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.7, duration: 0.6 }}
-          className="text-lg md:text-xl text-neutral-500 leading-relaxed mb-14 max-w-xl mx-auto text-center"
+          className="text-base sm:text-lg md:text-xl text-neutral-500 leading-relaxed mb-8 sm:mb-14 max-w-xl mx-auto text-center"
         >
           Me conta o caos. Eu devolvo{" "}
           <span className="text-neutral-300">o controle.</span>
@@ -1200,11 +1200,11 @@ function ContactPreview({ scrollYProgress }: { scrollYProgress: MotionValue<numb
                 animation: "sweep 2s ease-in-out infinite",
               }}
             />
-            <span className="relative z-10 text-black font-bold text-sm md:text-base uppercase tracking-[0.15em] py-4 px-10 md:py-5 md:px-14">
+            <span className="relative z-10 text-black font-bold text-xs sm:text-sm md:text-base uppercase tracking-[0.15em] py-3 px-6 sm:py-4 sm:px-10 md:py-5 md:px-14">
               Recuperar meu tempo
             </span>
             <svg
-              className="relative z-10 w-4 h-4 text-black mr-8 group-hover:translate-x-1.5 transition-transform duration-300"
+              className="relative z-10 w-4 h-4 text-black mr-4 sm:mr-8 group-hover:translate-x-1.5 transition-transform duration-300"
               fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
@@ -1220,7 +1220,7 @@ function ContactPreview({ scrollYProgress }: { scrollYProgress: MotionValue<numb
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="flex gap-4"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4"
               >
                 {CONTACT_LINKS.map((link, i) => (
                   <motion.a
@@ -1231,7 +1231,7 @@ function ContactPreview({ scrollYProgress }: { scrollYProgress: MotionValue<numb
                     initial={{ opacity: 0, y: 15, scale: 0.8 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ delay: i * 0.1, duration: 0.4, type: "spring", bounce: 0.3 }}
-                    className="group flex flex-col items-center gap-3 px-8 py-5 rounded-2xl border border-white/10 bg-white/[0.03] hover:border-[#00ff66]/40 hover:bg-[#00ff66]/[0.05] transition-all duration-300"
+                    className="group flex flex-row sm:flex-col items-center gap-3 px-6 py-4 sm:px-8 sm:py-5 rounded-xl sm:rounded-2xl border border-white/10 bg-white/[0.03] hover:border-[#00ff66]/40 hover:bg-[#00ff66]/[0.05] transition-all duration-300"
                   >
                     <span className="text-neutral-400 group-hover:text-[#00ff66] transition-colors duration-300">
                       {link.icon}

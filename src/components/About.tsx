@@ -80,11 +80,11 @@ function ChapterCard({ chapter, index }: { chapter: typeof CHAPTERS[0], index: n
     <motion.div 
       ref={cardRef}
       style={{ scale, opacity }}
-      className="min-h-[50vh] flex flex-col justify-center py-10 origin-left"
+      className="min-h-[40vh] lg:min-h-[50vh] flex flex-col justify-center py-6 lg:py-10 origin-left"
     >
       <motion.div 
         style={{ borderColor }}
-        className="pl-8 border-l-2 transition-colors duration-300"
+        className="pl-4 sm:pl-6 lg:pl-8 border-l-2 transition-colors duration-300"
       >
         <div className="flex items-center gap-4 mb-6">
           <span className="text-[#00ff66] font-mono text-sm tracking-widest">{chapter.id} {"//"}</span>
@@ -93,12 +93,12 @@ function ChapterCard({ chapter, index }: { chapter: typeof CHAPTERS[0], index: n
           </div>
         </div>
         
-        <h3 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight uppercase flex gap-3 flex-wrap">
+        <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4 sm:mb-6 tracking-tight uppercase flex gap-2 sm:gap-3 flex-wrap">
           {chapter.title}
           <ScrollColorTitle text={chapter.highlight} scrollYProgress={scrollYProgress} />
         </h3>
         
-        <div className="text-xl md:text-3xl text-neutral-400 leading-tight font-medium max-w-3xl">
+        <div className="text-base sm:text-xl md:text-3xl text-neutral-400 leading-snug sm:leading-tight font-medium max-w-3xl">
           <ScrollRevealText text={chapter.text} />
         </div>
       </motion.div>
@@ -122,14 +122,14 @@ export function About() {
       ref={containerRef}
       className="relative z-10 w-full bg-black rounded-t-[3rem] md:rounded-t-[5rem] border-t border-white/10 shadow-[0_-20px_80px_rgba(0,0,0,0.9)] will-change-transform"
     >
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-12 gap-6 lg:gap-12">
 
         {/* LADO ESQUERDO: Avatar Fixo (Sticky) */}
         <div className="lg:col-span-5 relative">
-          <div className="sticky top-0 h-screen flex flex-col items-center justify-center py-20 z-[2]">
+          <div className="sticky top-0 h-auto py-12 lg:h-screen flex flex-col items-center justify-center lg:py-20 z-[2]">
             <motion.div 
               style={{ scale: avatarScale, rotate: avatarRotate }}
-              className="relative w-64 h-64 md:w-80 md:h-80"
+              className="relative w-44 h-44 sm:w-56 sm:h-56 md:w-80 md:h-80"
             >
               <div className="absolute inset-[-20px] border border-dashed border-[#00ff66]/20 rounded-full animate-[spin_40s_linear_infinite]"></div>
               
@@ -156,7 +156,7 @@ export function About() {
               </div>
             </motion.div>
 
-            <div className="mt-16 grid grid-cols-2 gap-8 w-full max-w-sm">
+            <div className="mt-10 lg:mt-16 grid grid-cols-2 gap-6 lg:gap-8 w-full max-w-sm">
               <div className="border-l border-white/10 pl-4">
                 <p className="text-neutral-600 text-[10px] uppercase tracking-widest mb-1">Developer</p>
                 <p className="text-white text-sm font-bold uppercase font-mono">Joaquim</p>
@@ -172,13 +172,13 @@ export function About() {
         {/* LADO DIREITO: Storytelling Interativo */}
         <div className="lg:col-span-7 relative">
           {/* Conteúdo scrollável */}
-          <div className="pt-[30vh]">
+          <div className="pt-[10vh] lg:pt-[30vh]">
             <motion.h2
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-5xl md:text-[7rem] font-black text-white tracking-tighter uppercase mb-20 leading-[0.9]"
+              className="text-3xl sm:text-5xl md:text-[7rem] font-black text-white tracking-tighter uppercase mb-10 lg:mb-20 leading-[0.9]"
             >
               Tornando o caos <br/>
               <span className="text-transparent" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.2)" }}>obsoleto.</span>
@@ -200,12 +200,12 @@ export function About() {
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-                className="p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/10 relative overflow-hidden group"
+                className="p-6 sm:p-8 lg:p-10 rounded-2xl lg:rounded-[2.5rem] bg-white/[0.02] border border-white/10 relative overflow-hidden group"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#00ff66]/10 blur-[50px] group-hover:bg-[#00ff66]/20 transition-colors"></div>
 
                 <Zap className="w-12 h-12 text-[#00ff66] mb-8 relative z-10" />
-                <p className="text-2xl md:text-4xl font-bold text-white leading-tight mb-8 relative z-10">
+                <p className="text-xl sm:text-2xl md:text-4xl font-bold text-white leading-tight mb-6 sm:mb-8 relative z-10">
                   &quot;Todo processo que ainda depende de você é tempo que ainda não te pertence.&quot;
                 </p>
                 <div className="flex items-center gap-4 text-[#00ff66] font-mono text-xs uppercase tracking-widest relative z-10">
