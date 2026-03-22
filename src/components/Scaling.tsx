@@ -265,11 +265,11 @@ function InlineTool({
 
   return (
     <motion.div style={{ opacity, scale, y }} className="flex flex-col items-center gap-1 will-change-transform">
-      <div className="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-lg bg-white/[0.06] border border-white/8"
+      <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-md sm:rounded-lg bg-white/[0.06] border border-white/8"
         style={{ boxShadow: `0 0 10px ${tool.color}12` }}>
-        <Icon size={16} color={tool.color} />
+        <Icon className="w-3 h-3 sm:w-4 sm:h-4" color={tool.color} />
       </div>
-      <span className="font-mono text-[5px] md:text-[6px] text-neutral-600 uppercase tracking-[0.06em]">{tool.name}</span>
+      <span className="font-mono text-[4px] sm:text-[5px] md:text-[6px] text-neutral-600 uppercase tracking-[0.06em] hidden sm:block">{tool.name}</span>
     </motion.div>
   );
 }
@@ -1299,7 +1299,7 @@ export function Scaling() {
 
 
   return (
-    <section ref={containerRef} className="relative z-20 w-full h-[1500vh] mt-[-300vh]">
+    <section ref={containerRef} className="relative z-20 w-full h-[2200vh] sm:h-[1800vh] md:h-[1500vh] mt-[-300vh]">
       <motion.div style={{ clipPath }} className="sticky top-0 h-screen w-full overflow-hidden">
 
         {/* Fundo espaço */}
@@ -1320,7 +1320,7 @@ export function Scaling() {
           <motion.div style={{ opacity: trailOpacity }}
             className="flex-1 h-px bg-gradient-to-r from-transparent via-[#00ff66]/20 to-[#00ff66]/50 mr-[-20px]" />
           <div className="flex-shrink-0">
-            <RocketSVG className="w-20 h-14 md:w-28 md:h-18" />
+            <RocketSVG className="w-14 h-10 sm:w-20 sm:h-14 md:w-28 md:h-18" />
           </div>
         </motion.div>
 
@@ -1342,7 +1342,7 @@ export function Scaling() {
         />
 
         {/* FILA DE TOOLS */}
-        <div className="absolute bottom-[22%] left-1/2 -translate-x-1/2 z-10 flex items-end gap-1.5 md:gap-2.5">
+        <div className="absolute bottom-[22%] left-1/2 -translate-x-1/2 z-10 flex items-end flex-wrap justify-center gap-1 sm:gap-1.5 md:gap-2.5 max-w-[90vw] sm:max-w-none">
           {TOOLS.map((tool, i) => (
             <InlineTool key={tool.name} tool={tool} index={i} total={TOOLS.length} scrollYProgress={scrollYProgress} />
           ))}
