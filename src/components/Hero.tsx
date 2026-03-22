@@ -1,215 +1,235 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { ArrowRight, Terminal, Activity } from "lucide-react";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { InteractiveParticles } from "./ui/InteractiveParticles";
-import { TacticalBackground } from "./ui/TacticalBackground";
 import { CipherText } from "./ui/CipherText";
+
 import gsap from "gsap";
+
+const ROLES = [
+  "System Architect",
+  "AI Developer",
+  "Automation Engineer",
+  "Full-Stack Builder",
+];
+
+/* ─── Subtítulo rotativo ─── */
+function RotatingRole() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((i) => (i + 1) % ROLES.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="h-6 relative overflow-hidden">
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={ROLES[index]}
+          initial={{ y: 20, opacity: 0, filter: "blur(4px)" }}
+          animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+          exit={{ y: -20, opacity: 0, filter: "blur(4px)" }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className="absolute inset-x-0 text-center text-[11px] md:text-sm font-mono tracking-[0.3em] text-[#00ff66]/70 uppercase"
+        >
+          {ROLES[index]}
+        </motion.span>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/* ─── Scan Line CRT ─── */
+function ScanLine() {
+  return (
+    <motion.div
+      className="absolute left-0 right-0 h-px z-[3] pointer-events-none"
+      style={{
+        background: "linear-gradient(90deg, transparent 0%, rgba(0,255,102,0.15) 20%, rgba(0,255,102,0.3) 50%, rgba(0,255,102,0.15) 80%, transparent 100%)",
+        boxShadow: "0 0 8px rgba(0,255,102,0.15), 0 0 20px rgba(0,255,102,0.05)",
+      }}
+      animate={{
+        top: ["-2%", "102%"],
+      }}
+      transition={{
+        duration: 4,
+        repeat: Infinity,
+        repeatDelay: 3,
+        ease: "linear",
+      }}
+    />
+  );
+}
 
 export function Hero() {
   const containerRef = useRef<HTMLElement>(null);
   const nameRef1 = useRef<HTMLDivElement>(null);
   const nameRef2 = useRef<HTMLDivElement>(null);
   const copyAreaRef = useRef<HTMLDivElement>(null);
-  const cardLeftRef = useRef<HTMLDivElement>(null);
-  const cardRightRef = useRef<HTMLDivElement>(null);
   const curtainRef = useRef<HTMLDivElement>(null);
-  const metricsBarRef = useRef<HTMLDivElement>(null);
-
   const [startReveal, setStartReveal] = useState(false);
-  
+
   const { scrollY } = useScroll();
-
-  // EFEITOS DE PARALLAX (Mapeados para os primeiros 800px de scroll)
-  const yTextTop = useSpring(useTransform(scrollY, [0, 800], [0, 150]), { stiffness: 100, damping: 30 });
-  const yTextBottom = useSpring(useTransform(scrollY, [0, 800], [0, -100]), { stiffness: 100, damping: 30 });
-  const yCardLeft = useSpring(useTransform(scrollY, [0, 800], [0, -250]), { stiffness: 100, damping: 30 });
-  const yCardRight = useSpring(useTransform(scrollY, [0, 800], [0, 250]), { stiffness: 100, damping: 30 });
-  
-  const opacity = useTransform(scrollY, [0, 600], [1, 0]);
-  const scale = useTransform(scrollY, [0, 800], [1, 0.92]);
-
-  const mouseX = useSpring(0, { stiffness: 50, damping: 20 });
-  const mouseY = useSpring(0, { stiffness: 50, damping: 20 });
-
-  // HOOKS EXTRAÍDOS DO JSX (Rules of Hooks - devem estar no top-level)
-  const cardRotateX = useTransform(mouseY, [-0.5, 0.5], [5, -5]);
-  const cardRotateY = useTransform(mouseX, [-0.5, 0.5], [-5, 5]);
-  const nameOffsetX = useTransform(mouseX, [-0.5, 0.5], [-20, 20]);
-  const nameOffsetY = useTransform(mouseY, [-0.5, 0.5], [-20, 20]);
-
-  const onMouseMove = (e: React.MouseEvent) => {
-    const { clientX, clientY } = e;
-    const { innerWidth, innerHeight } = window;
-    mouseX.set((clientX / innerWidth) - 0.5);
-    mouseY.set((clientY / innerHeight) - 0.5);
-  };
+  const yText   = useSpring(useTransform(scrollY, [0, 600], [0, -60]),  { stiffness: 80, damping: 25 });
+  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+  const scale   = useTransform(scrollY, [0, 700], [1, 0.95]);
 
   useEffect(() => {
-    const tl = gsap.timeline({ 
-      onComplete: () => setStartReveal(true) 
-    });
+    const tl = gsap.timeline({ onComplete: () => setStartReveal(true) });
 
     if (curtainRef.current) {
-      tl.to(curtainRef.current, { 
-        yPercent: -100, 
-        duration: 1.2, 
-        ease: "power4.inOut", 
-        delay: 0.5,
-        force3D: true 
+      tl.to(curtainRef.current, {
+        yPercent: -100,
+        duration: 1.2,
+        ease: "power4.inOut",
+        delay: 0.3,
+        force3D: true,
       });
     }
-    
-    tl.from([nameRef1.current, nameRef2.current], { 
-        y: 50, 
-        opacity: 0, 
-        stagger: 0.2, 
-        duration: 1, 
-        ease: "power4.out",
-        force3D: true
-      }, "-=0.5")
-      .from([cardLeftRef.current, cardRightRef.current], { 
-        scale: 0.8, 
-        opacity: 0, 
-        duration: 0.8, 
-        ease: "back.out(1.7)",
-        stagger: 0.1,
-        force3D: true
-      }, "-=0.8")
-      .from(copyAreaRef.current, { 
-        y: 30, 
-        opacity: 0, 
-        duration: 0.8,
-        ease: "power2.out",
-        force3D: true
-      }, "-=0.4");
 
-    gsap.to(metricsBarRef.current, {
-      width: "99.9%",
-      duration: 2,
+    tl.from([nameRef1.current, nameRef2.current], {
+      y: 60,
+      opacity: 0,
+      stagger: 0.15,
+      duration: 1,
+      ease: "power4.out",
+      force3D: true,
+    }, "-=0.4")
+    .from(copyAreaRef.current, {
+      y: 24,
+      opacity: 0,
+      duration: 0.8,
       ease: "power2.out",
-      delay: 2
-    });
+      force3D: true,
+    }, "-=0.5");
   }, []);
 
   return (
-    // 'h-screen' e 'bg-black' garantem que a seção ocupe 100% da viewport e impeça vazamentos cinzas
-    <section 
-      ref={containerRef} 
-      onMouseMove={onMouseMove}
-      className="h-screen w-full sticky top-0 bg-black flex flex-col items-center justify-center overflow-hidden z-0"
+    <section
+      ref={containerRef}
+      className="h-screen w-full sticky top-0 flex flex-col items-center justify-center overflow-hidden z-0"
     >
-      {/* Cinematic Curtain */}
+      {/* Cortina de entrada */}
       <div ref={curtainRef} className="fixed inset-0 z-[100] bg-black pointer-events-none" />
 
-      <TacticalBackground />
-      <InteractiveParticles />
+      {/* Grade sutil de fundo */}
+      <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.04]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)
+          `,
+          backgroundSize: "70px 70px",
+        }}
+      />
 
-      <motion.div style={{ opacity, scale }} className="relative z-10 w-full h-full flex flex-col items-center justify-center pt-20 md:pt-32 will-change-transform">
-        
-        {/* CARDS LATERAIS (Posicionados para nunca obstruir o texto central) */}
-        <motion.div 
-          ref={cardLeftRef}
-          style={{ 
-            y: yCardLeft,
-            rotateX: cardRotateX,
-            rotateY: cardRotateY,
-          }}
-          className="hidden xl:flex absolute left-[2%] top-[25%] flex-col p-5 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/10 shadow-2xl w-64 z-0 pointer-events-none will-change-transform"
+      {/* Partículas — canvas no layout.tsx via HeroParticlesWrapper */}
+
+      {/* Brilho radial verde sutil no centro */}
+      <div className="absolute inset-0 z-[1] pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse 70% 50% at 50% 48%, rgba(0,255,102,0.05) 0%, transparent 65%)"
+        }}
+      />
+
+      {/* Vinheta nas bordas */}
+      <div className="absolute inset-0 z-[1] pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse 100% 100% at 50% 50%, transparent 35%, rgba(0,0,0,0.7) 100%)"
+        }}
+      />
+
+      {/* Gradiente para fundir com seção de baixo */}
+      <div className="absolute inset-x-0 bottom-0 h-48 z-[2] pointer-events-none bg-gradient-to-t from-black to-transparent" />
+
+      {/* Conteúdo central */}
+      <motion.div
+        style={{ opacity, scale, y: yText }}
+        className="relative z-10 flex flex-col items-center justify-center w-full px-6 text-center will-change-transform"
+      >
+        {/* Badge de status */}
+        <motion.div
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5, duration: 0.6, ease: "easeOut" }}
+          className="mb-10 inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/10 bg-white/[0.03]"
         >
-          <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-3">
-            <Terminal className="w-4 h-4 text-[#00ff66]" />
-            <span className="text-xs font-mono text-neutral-400">system_log.sh</span>
-          </div>
-          <div className="space-y-2 font-mono text-[10px] text-neutral-500">
-            <p><span className="text-[#00ff66]">{">"}</span> core_init...</p>
-            <p><span className="text-[#00ff66]">{">"}</span> automation active [OK]</p>
-          </div>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00ff66] animate-pulse" />
+          <span className="text-[11px] font-mono tracking-[0.2em] text-neutral-500 uppercase">
+            Disponível para novos projetos
+          </span>
         </motion.div>
 
-        <motion.div 
-          ref={cardRightRef}
-          style={{ 
-            y: yCardRight,
-            rotateX: cardRotateX,
-            rotateY: cardRotateY,
-          }}
-          className="hidden xl:flex absolute right-[2%] bottom-[25%] flex-col p-5 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/10 shadow-2xl w-64 z-0 pointer-events-none will-change-transform"
-        >
-          <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-3">
-            <Activity className="w-4 h-4 text-[#00ff66]" />
-            <span className="text-xs font-mono text-neutral-400">perf_metrics</span>
-          </div>
-          <div className="space-y-4">
-            <div className="flex justify-between text-[10px] font-mono text-neutral-400">
-              <span>EFFICIENCY</span>
-              <span className="text-[#00ff66]">99%</span>
-            </div>
-            <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-              <div ref={metricsBarRef} className="w-0 h-full bg-[#00ff66] shadow-[0_0_10px_#00ff66]"></div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* CONTEÚDO CENTRAL */}
-        <div className="flex flex-col items-center justify-center w-full relative z-50">
-          
-          <div className="mb-6 md:mb-10 inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-[#00ff66] animate-pulse"></span>
-            <span className="text-xs font-mono tracking-widest text-neutral-300 uppercase">System Architect</span>
-          </div>
-
-          {/* Nome com Parallax e Decodificação */}
-          <motion.div 
-            className="relative w-full max-w-[1400px] flex flex-col items-center justify-center px-4 will-change-transform z-50"
+        {/* Nome */}
+        <div className="mb-8 select-none">
+          <h1
+            ref={nameRef1 as React.RefObject<HTMLHeadingElement>}
+            className="block text-[19vw] sm:text-[15vw] md:text-[13vw] lg:text-[12rem] font-black text-white tracking-[-0.04em] leading-[0.85] uppercase"
+          >
+            <CipherText text="JOAQUIM" triggerReveal={startReveal} startDelay={0} glitch />
+          </h1>
+          <h1
+            ref={nameRef2 as React.RefObject<HTMLHeadingElement>}
+            className="block text-[19vw] sm:text-[15vw] md:text-[13vw] lg:text-[12rem] font-black tracking-[-0.04em] leading-[0.85] uppercase"
             style={{
-              x: nameOffsetX,
-              y: nameOffsetY,
+              color: "transparent",
+              WebkitTextStroke: "1.5px rgba(255,255,255,0.2)",
             }}
           >
-            <motion.h1 
-              ref={nameRef1}
-              style={{ y: yTextTop }}
-              className="text-[14vw] md:text-[10rem] lg:text-[13rem] font-black text-white tracking-tighter leading-[0.75] uppercase w-full text-center drop-shadow-2xl"
+            <CipherText text="SALLES" triggerReveal={startReveal} startDelay={180} glitch />
+            <sup
+              className="text-[0.3em] tracking-normal align-super -ml-2"
+              style={{ WebkitTextStroke: "0px", color: "#00ff66" }}
             >
-              <CipherText text="JOAQUIM" triggerReveal={startReveal} startDelay={0} />
-            </motion.h1>
-            
-            <motion.h1 
-              ref={nameRef2}
-              style={{ y: yTextBottom, WebkitTextStroke: "1px rgba(255,255,255,0.5)" }}
-              className="text-[14vw] md:text-[10rem] lg:text-[13rem] font-black text-transparent tracking-tighter leading-[0.75] uppercase w-full text-center"
-            >
-              <CipherText text="SALLES" triggerReveal={startReveal} startDelay={300} />
-              <sup className="text-[#00ff66] text-[0.4em] tracking-normal -ml-1 align-super" style={{ WebkitTextStroke: "0px" }}>AI</sup>
-            </motion.h1>
-          </motion.div>
-
-          {/* Copy e CTA */}
-          <div ref={copyAreaRef} className="flex flex-col items-center mt-12 md:mt-20 z-40 pointer-events-auto relative will-change-transform">
-            <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] rounded-3xl blur-xl -z-10"></div>
-            
-            <p className="text-lg md:text-xl text-neutral-400 font-medium max-w-2xl text-center mb-10 px-6 leading-relaxed">
-              Do caos digital pro cockpit que roda sozinho. <br/> 
-              <span className="text-white">Construindo sistemas de alta precisão.</span>
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center gap-4">
-              <a
-                href="https://wa.me/5500000000000" 
-                target="_blank"
-                rel="noreferrer"
-                className="group relative inline-flex items-center justify-center h-14 md:h-16 px-10 rounded-2xl bg-white text-black font-bold uppercase tracking-wider text-xs transition-all hover:scale-105 hover:bg-[#00ff66] cursor-pointer"
-              >
-                Iniciar Diagnóstico
-                <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-2 transition-transform" />
-              </a>
-            </div>
-          </div>
-
+              AI
+            </sup>
+          </h1>
         </div>
+
+        {/* Role rotativo */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.8, duration: 0.6 }}
+          className="mb-6"
+        >
+          <RotatingRole />
+        </motion.div>
+
+        {/* Linha divisória */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: 1.6, duration: 0.8, ease: "easeOut" }}
+          className="w-16 h-px bg-[#00ff66]/40 mb-8 origin-left"
+        />
+
+        {/* Copy */}
+        <div ref={copyAreaRef} className="flex flex-col items-center gap-8 max-w-lg">
+          <p className="text-base md:text-lg text-neutral-500 leading-relaxed">
+            Você perde horas em tarefas que uma máquina poderia fazer.{" "}
+            <span className="text-neutral-300">
+              Eu construo o sistema que devolve esse tempo.
+            </span>
+          </p>
+        </div>
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.4, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          className="w-px h-10 bg-gradient-to-b from-neutral-700 to-transparent"
+        />
       </motion.div>
     </section>
   );

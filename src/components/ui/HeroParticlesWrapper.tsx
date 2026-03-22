@@ -1,0 +1,12 @@
+"use client";
+
+import dynamic from "next/dynamic";
+
+const HeroParticles = dynamic(
+  () => import("./HeroParticles").then((m) => m.HeroParticles),
+  { ssr: false }
+);
+
+export function HeroParticlesWrapper() {
+  return <HeroParticles />;
+}

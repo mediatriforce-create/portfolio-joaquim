@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScrolling from "@/components/layout/SmoothScrolling";
+import { HeroParticlesWrapper } from "@/components/ui/HeroParticlesWrapper";
 
 const ibmPlexSans = IBM_Plex_Sans({
   variable: "--font-sans",
@@ -59,6 +60,7 @@ export default function RootLayout({
       <body
         className={`${ibmPlexSans.variable} ${jetBrainsMono.variable} font-sans bg-black text-white antialiased selection:bg-[#00ff66] selection:text-black overflow-x-clip`}
       >
+        <HeroParticlesWrapper />
         <SmoothScrolling>
           {children}
         </SmoothScrolling>

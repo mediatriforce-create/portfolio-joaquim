@@ -1,8 +1,6 @@
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { Scaling } from "@/components/Scaling";
-import { Projects } from "@/components/Projects";
-import { Contact } from "@/components/Contact";
 import { GlobalScrollIndicator } from "@/components/GlobalScrollIndicator";
 
 export default function Home() {
@@ -27,9 +25,7 @@ export default function Home() {
       <Hero />
       <About />
       <Scaling />
-      <Projects />
-      <Contact />
-      
+
     </main>
   );
 }

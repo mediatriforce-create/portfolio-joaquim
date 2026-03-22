@@ -43,23 +43,23 @@ function ScrollRevealText({ text }: { text: string }) {
 const CHAPTERS = [
   {
     id: "01",
-    title: "A Origem",
-    highlight: "do Fim do Caos",
-    text: "Tudo começou resolvendo meus próprios problemas. Criei automações para eliminar tarefas repetitivas e organizar meu dia a dia. O que era experimentação virou necessidade: apliquei os mesmos sistemas para minha família e logo escalei para projetos maiores.",
+    title: "Do Caos",
+    highlight: "ao Cockpit",
+    text: "Eu não comecei querendo construir uma empresa. Comecei querendo recuperar meu tempo. Me incomodava ver inteligência desperdiçada em planilhas, WhatsApp e processos manuais que uma máquina faria melhor. Parei de reclamar e comecei a codificar. Primeiro para mim, depois para quem percebeu o valor do que eu estava operando. Foi assim que eu, Joaquim Salles, saí do laboratório e entrei em campo. Agora eu aniquilo o caos de quem decidiu parar de improvisar e começar a operar de verdade.",
     icon: <Terminal className="w-6 h-6 text-[#00ff66]" />,
   },
   {
     id: "02",
     title: "Impacto",
     highlight: "em Escala",
-    text: "Ao desenvolver sistemas para ONGs, vi o impacto real: horas de trabalho manual recuperadas e processos que antes eram papel virando dashboards automáticos. Ali eu entendi minha função no mercado.",
+    text: "Meu primeiro teste real aconteceu no cenário de maior pressão operacional que conheço: as ONGs. Lá, eu desenvolvi sistemas que aniquilaram a dependência do papel, das planilhas soltas e do \"alguém tem que lembrar\". O resultado? Dashboards que entregam a verdade em tempo real e centenas de horas de trabalho manual recuperadas para o que realmente importava. Foi ali que entendi o que realmente estava vendendo: tempo de volta.",
     icon: <Box className="w-6 h-6 text-[#00ff66]" />,
   },
   {
     id: "03",
     title: "O Cockpit",
     highlight: "Inteligente",
-    text: "Hoje, aos 16 anos, construo ecossistemas end-to-end com IA e automação para quem sofre com o mesmo desafio: operações que drenam tempo. Minha abordagem é direta: entender o problema real e entregar a solução que roda sozinha.",
+    text: "Hoje, aos 16 anos, atuo como System Architect projetando ecossistemas End-to-End integrados com IA. O projeto só termina quando você para de gerenciar a operação e passa a comandá-la. Eu entrego um cockpit que pensa, conecta e executa — enquanto você assume o único papel que uma máquina nunca poderá substituir: o de decidir.",
     icon: <ShieldCheck className="w-6 h-6 text-[#00ff66]" />,
   }
 ];
@@ -118,15 +118,15 @@ export function About() {
   const avatarRotate = useTransform(scrollYProgress, [0, 1], [0, 10]);
 
   return (
-    <section 
+    <section
       ref={containerRef}
       className="relative z-10 w-full bg-black rounded-t-[3rem] md:rounded-t-[5rem] border-t border-white/10 shadow-[0_-20px_80px_rgba(0,0,0,0.9)] will-change-transform"
     >
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12">
-        
+
         {/* LADO ESQUERDO: Avatar Fixo (Sticky) */}
         <div className="lg:col-span-5 relative">
-          <div className="sticky top-0 h-screen flex flex-col items-center justify-center py-20">
+          <div className="sticky top-0 h-screen flex flex-col items-center justify-center py-20 z-[2]">
             <motion.div 
               style={{ scale: avatarScale, rotate: avatarRotate }}
               className="relative w-64 h-64 md:w-80 md:h-80"
@@ -170,10 +170,10 @@ export function About() {
         </div>
 
         {/* LADO DIREITO: Storytelling Interativo */}
-        <div className="lg:col-span-7 relative h-full">
-          <div className="sticky bottom-12 pb-32">
-            <div className="pt-[30vh]">
-            <motion.h2 
+        <div className="lg:col-span-7 relative">
+          {/* Conteúdo scrollável */}
+          <div className="pt-[30vh]">
+            <motion.h2
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -183,42 +183,41 @@ export function About() {
               Tornando o caos <br/>
               <span className="text-transparent" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.2)" }}>obsoleto.</span>
             </motion.h2>
-            
+
             <div className="space-y-12">
               {CHAPTERS.map((chapter, i) => (
                 <ChapterCard key={i} chapter={chapter} index={i} />
               ))}
             </div>
 
-            {/* Manifesto Final - Aparece puxando tudo */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 50 }}
-              whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
-              className="mt-20 p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/10 relative overflow-hidden group"
-            >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#00ff66]/10 blur-[50px] group-hover:bg-[#00ff66]/20 transition-colors"></div>
-              
-              <Zap className="w-12 h-12 text-[#00ff66] mb-8 relative z-10" />
-              <p className="text-2xl md:text-4xl font-bold text-white leading-tight mb-8 relative z-10">
-                &quot;Eu elimino o trabalho braçal da sua operação para que você <span className="text-[#00ff66]">recupere o controle absoluto</span> do seu tempo.&quot;
-              </p>
-              <div className="flex items-center gap-4 text-[#00ff66] font-mono text-xs uppercase tracking-widest relative z-10">
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-                Next Phase
-              </div>
-            </motion.div>
           </div>
+
+          {/* Spacer — manifesto fica STICKY aqui enquanto o Scaling entra por cima */}
+          <div className="h-[200vh]">
+            <div className="sticky top-[30%] pb-20">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 50 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+                className="p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/10 relative overflow-hidden group"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#00ff66]/10 blur-[50px] group-hover:bg-[#00ff66]/20 transition-colors"></div>
+
+                <Zap className="w-12 h-12 text-[#00ff66] mb-8 relative z-10" />
+                <p className="text-2xl md:text-4xl font-bold text-white leading-tight mb-8 relative z-10">
+                  &quot;Todo processo que ainda depende de você é tempo que ainda não te pertence.&quot;
+                </p>
+                <div className="flex items-center gap-4 text-[#00ff66] font-mono text-xs uppercase tracking-widest relative z-10">
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                  Next Phase
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
 
       </div>
-
-      {/* Spacer: zona de "congelamento". O avatar sticky continua visível
-          enquanto o scroll percorre esses 100vh vazios. O Scaling (mt-[-100vh])
-          se sobrepõe EXATAMENTE nessa zona, e o wipe cobre a tela congelada. */}
-      <div className="h-[100vh]" />
 
     </section>
   );

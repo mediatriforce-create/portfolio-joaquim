@@ -2,47 +2,10 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { PROJECTS } from "@/data/projects";
+import type { Project } from "@/data/projects";
 
-const PROJECTS = [
-  {
-    id: "vav",
-    title: "VAV CENTRAL",
-    category: "SISTEMA NÚCLEO",
-    description: "Plataforma centralizada de gestão operacional. O fim do caos sistêmico e o início do controle absoluto.",
-    color: "#00ff66",
-    bg: "bg-black",
-    tech: ["Next.js", "Supabase", "Tailwind"],
-    status: "OPERACIONAL",
-    impact: "+120h/mês recuperadas",
-    timeline: "2025 — Presente",
-  },
-  {
-    id: "time",
-    title: "TIME TRACK",
-    category: "PERFORMANCE",
-    description: "Rastreamento cirúrgico de produtividade. Recuperação massiva de horas perdidas em tarefas manuais.",
-    color: "#00b8ff",
-    bg: "bg-[#050505]",
-    tech: ["React", "Firebase", "Node.js"],
-    status: "EM PRODUÇÃO",
-    impact: "3 equipes ativas",
-    timeline: "2025",
-  },
-  {
-    id: "cgr",
-    title: "CGR1-PLANNER",
-    category: "TÁTICO",
-    description: "Motor de inteligência para planejamento estratégico de alto nível. Decisões baseadas em dados em tempo real.",
-    color: "#ff003c",
-    bg: "bg-[#0a0a0a]",
-    tech: ["Python", "AI", "PostgreSQL"],
-    status: "MVP ATIVO",
-    impact: "Decisões 4x mais rápidas",
-    timeline: "2026",
-  }
-];
-
-const ProjectCard = ({ project, index, total }: { project: typeof PROJECTS[0], index: number, total: number }) => {
+const ProjectCard = ({ project, index, total }: { project: Project, index: number, total: number }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   
   // Rastreia o scroll apenas DESTE card específico
@@ -135,7 +98,7 @@ export function Projects() {
   return (
     <section className="relative z-30 w-full bg-black">
       {/* Title Section */}
-      <div className="w-full py-20 flex flex-col items-center justify-center border-t border-white/10">
+      <div className="w-full py-20 flex flex-col items-center justify-center">
         <h2 className="text-[12px] font-mono tracking-[0.5em] text-[#00ff66] uppercase mb-4">
           Arquitetura Aplicada
         </h2>
