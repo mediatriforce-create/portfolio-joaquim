@@ -1299,7 +1299,7 @@ export function Scaling() {
 
 
   return (
-    <section ref={containerRef} className="relative z-20 w-full h-[2200vh] sm:h-[1800vh] md:h-[1500vh] mt-[-300vh]">
+    <section ref={containerRef} className="relative z-20 w-full h-[1500vh] mt-[-300vh]">
       <motion.div style={{ clipPath }} className="sticky top-0 h-screen w-full overflow-hidden">
 
         {/* Fundo espaço */}
